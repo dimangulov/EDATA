@@ -4,9 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
+using Microsoft.AspNet.Mvc;
+using Microsoft.AspNet.Mvc.Formatters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Serialization;
 
 namespace EDATA.API
 {
@@ -37,6 +40,19 @@ namespace EDATA.API
             services.AddApplicationInsightsTelemetry(Configuration);
 
             services.AddMvc();
+
+            /*services.Configure<MvcOptions>(options =>
+            {
+                options.InputFormatters.Clear();
+
+                var jsonOutputFormatter = new JsonOutputFormatter();
+                jsonOutputFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                jsonOutputFormatter.SerializerSettings.DefaultValueHandling = Newtonsoft.Json.DefaultValueHandling.Ignore;
+                jsonOutputFormatter.
+
+                options.OutputFormatters.RemoveAll(formatter => formatter.Instance.GetType() == typeof(JsonOutputFormatter));
+                options.OutputFormatters.Insert(0, jsonOutputFormatter);
+            });*/
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
